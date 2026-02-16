@@ -68,11 +68,11 @@ function updateTronics() {
 
 function powerCheckers() {
   if (scene.door1 || scene.door2) {
-    scene.power -= 0.5; // if the door is closed it uses 0.5% power per second, if its open it uses 0% power per second
+    scene.power -= 0.20; // if the door is closed it uses 0.5% power per second, if its open it uses 0% power per second
   }
 
   if ( scene.door1 && scene.door2) {
-    scene.power -= 1; // if both doors are closed it uses 1% power per second, if one is open and the other is closed it uses 0.5% power per second, if both are open it uses 0% power per second
+    scene.power -= 0.40; // if both doors are closed it uses 1% power per second, if one is open and the other is closed it uses 0.5% power per second, if both are open it uses 0% power per second
   }
 
   if (scene.light1 || scene.light2) {
