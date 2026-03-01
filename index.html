@@ -61,7 +61,7 @@
           <img src="assets_exp/cameras.png" alt="camera_btn">
         </div>
         <div class="ipad">
-          <div class="screen">
+          <div class="ipad-screen">
             <!-- content shown on the iPad display goes here -->
           </div>
           <div class="camera-hole"></div>
@@ -71,8 +71,82 @@
       <div class="cameras"></div>
     </div>
   </div>
+  <script>
+    (function () {
+      let errorPanel = null;
 
-  <script type="module" src="js/animation.js"></script>
+      function stringifyArg(value) {
+        if (value instanceof Error) {
+          return value.stack || value.message;
+        }
+
+        if (typeof value === 'object' && value !== null) {
+          try {
+            return JSON.stringify(value);
+          } catch {
+            return String(value);
+          }
+        }
+
+        return String(value);
+      }
+
+      function ensureErrorPanel() {
+        if (errorPanel) return errorPanel;
+
+        errorPanel = document.createElement('div');
+        errorPanel.id = 'runtime-error-panel';
+        errorPanel.style.cssText = [
+          'position:fixed',
+          'left:12px',
+          'right:12px',
+          'bottom:12px',
+          'max-height:40vh',
+          'overflow:auto',
+          'padding:10px 12px',
+          'background:#b00020',
+          'color:#fff',
+          'font-family:monospace',
+          'font-size:12px',
+          'line-height:1.4',
+          'border:1px solid #ff6b6b',
+          'border-radius:6px',
+          'z-index:99999',
+          'white-space:pre-wrap'
+        ].join(';');
+
+        document.body.appendChild(errorPanel);
+        return errorPanel;
+      }
+
+      function showError(message) {
+        const panel = ensureErrorPanel();
+        const row = document.createElement('div');
+        row.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+        panel.appendChild(row);
+      }
+
+      window.addEventListener('error', function (event) {
+        const message = event.error?.stack || event.message || 'Unknown runtime error';
+        showError(message);
+      });
+
+      window.addEventListener('unhandledrejection', function (event) {
+        const reason = event.reason instanceof Error
+          ? (event.reason.stack || event.reason.message)
+          : stringifyArg(event.reason);
+        showError(`Unhandled promise rejection: ${reason}`);
+      });
+
+      const originalConsoleError = console.error.bind(console);
+      console.error = function (...args) {
+        originalConsoleError(...args);
+        showError(args.map(stringifyArg).join(' '));
+      }; 
+    })();
+
+  </script>
+    <script type="module" src="js/animation.js"></script>
   <script type="module" src="js/util.js"></script>
   <script type="module" src="js/clock.js"></script>
   <script type="module" src="js/game.js"></script>
