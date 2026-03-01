@@ -169,68 +169,68 @@ body {
   width: min(74vw, 980px);
   aspect-ratio: 4 / 3;
   transform: translate(-50%, -50%);
-  background: linear-gradient(145deg, #d4d7dd 0%, #b8bcc4 48%, #a7acb6 100%);
-  border: 2px solid #8c919b;
+  background: linear-gradient(145deg, #1c1c1e 0%, #0f0f10 48%, #0a0a0b 100%);
+  border: 2px solid #2c2c2e;
   border-radius: 38px;
   box-sizing: border-box;
   z-index: 4;
   pointer-events: auto;
   overflow: hidden;
   box-shadow:
-    0 26px 55px rgba(0, 0, 0, 0.45),
-    inset 0 2px 2px rgba(255, 255, 255, 0.4),
-    inset 0 -3px 6px rgba(0, 0, 0, 0.2);
+    0 26px 55px rgba(0, 0, 0, 0.65),
+    inset 0 2px 2px rgba(255, 255, 255, 0.08),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.4);
 }
 
 .ipad .ipad-screen {
   position: absolute;
-  top: 7%;
-  left: 4%;
-  width: 92%;
-  height: 86%;
+  top: 5%;
+  left: 8%;
+  width: 84%;
+  height: 90%;
   background: #0b0b0d;
-  border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
   box-shadow:
     inset 0 0 0 1px rgba(0, 0, 0, 0.65),
-    inset 0 12px 24px rgba(255, 255, 255, 0.02);
+    inset 0 6px 16px rgba(255, 255, 255, 0.01);
 }
 
 .ipad .camera-hole {
   position: absolute;
-  top: 3.8%;
-  left: 50%;
+  top: 50%;
+  left: 3.5%;
   width: clamp(10px, 1.2vw, 14px);
   height: clamp(10px, 1.2vw, 14px);
-  background: radial-gradient(circle at 35% 35%, #3a4768 0%, #10131b 60%, #050607 100%);
-  border: 1px solid #6f7580;
+  background: radial-gradient(circle at 35% 35%, #252a3a 0%, #0a0c10 60%, #030304 100%);
+  border: 1px solid #3a3a3c;
   border-radius: 50%;
-  transform: translateX(-50%);
+  transform: translateY(-50%);
   box-shadow:
-    0 0 0 2px rgba(12, 14, 18, 0.85),
-    inset 0 0 2px rgba(255, 255, 255, 0.35);
+    0 0 0 2px rgba(8, 8, 10, 0.9),
+    inset 0 0 2px rgba(255, 255, 255, 0.15);
 }
 
 .ipad .home-button {
   position: absolute;
-  left: 50%;
-  bottom: 2.9%;
-  width: clamp(38px, 4.2vw, 56px);
+  top: 50%;
+  right: 2.8%;
+  width: clamp(36px, 4vw, 52px);
   aspect-ratio: 1 / 1;
-  background: radial-gradient(circle at 50% 45%, #d6dae1 0%, #adb2bc 100%);
-  border: 1px solid #8f949f;
+  background: radial-gradient(circle at 50% 45%, #1f1f21 0%, #121214 100%);
+  border: 1px solid #3a3a3c;
   border-radius: 50%;
-  transform: translateX(-50%);
+  transform: translateY(-50%);
   box-shadow:
-    inset 0 1px 2px rgba(255, 255, 255, 0.45),
-    inset 0 -1px 2px rgba(0, 0, 0, 0.2);
+    inset 0 1px 2px rgba(255, 255, 255, 0.08),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .ipad .home-button::before {
   content: "";
   position: absolute;
   inset: 26%;
-  border: 2px solid rgba(110, 115, 126, 0.7);
+  border: 2px solid rgba(70, 70, 74, 0.7);
   border-radius: 8px;
 }
 
