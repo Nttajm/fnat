@@ -2,6 +2,20 @@
 
 import { startGame_Anim } from "./animation.js"; 
 
+function initCameraButtonToggle() {
+  const cameraButton = document.querySelector('.cameras-button');
+  const ipad = document.querySelector('.ipad');
+
+  if (!cameraButton || !ipad) return;
+
+  cameraButton.addEventListener('click', () => {
+    const isOn = ipad.classList.contains('screen-on');
+
+    ipad.classList.toggle('screen-on', !isOn);
+    ipad.classList.toggle('screen-off', isOn);
+  });
+}
+
 function initStartMenuNavigation() {
   const menu = document.querySelector('.start-game .actions');
   const buttons = menu ? Array.from(menu.querySelectorAll('button')) : [];
@@ -50,4 +64,6 @@ function initStartMenuNavigation() {
 
 initStartMenuNavigation();
 
-// end 
+initCameraButtonToggle();
+
+// end  
