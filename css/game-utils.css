@@ -171,7 +171,7 @@ body {
   position: absolute;
   top: 47%;
   left: 50%;
-  width: min(90vw, 1280px);
+  width: min(80vw, 1000px);
   aspect-ratio: 6 / 4;
   transform: translate(-50%, -50%) rotateX(90deg);
   transform-origin: bottom;
@@ -376,6 +376,43 @@ body {
   left: 48%;
 }
 
+.power-info {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  z-index: 5;
+  color: white;
+  font-family: var(--f13);
+  font-size: 1.1rem;
+}
+
+.usage-cont {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.usage {
+  width: 10px;
+  height: 20px;
+  background-color: #1eff00;
+  position: relative;
+}
+
+#u1, #u2 {
+  background-color: #1eff00;
+}
+
+#u3 {
+  background-color: #ffd900;
+}
+
+#u4 {
+  background-color: #ff0000;
+}
+
+
+
 @keyframes screen-flip-on {
   0% {
     transform: translate(-50%, -50%) perspective(1000px) rotateX(90deg);
@@ -467,4 +504,10 @@ body {
   .ipad .ipad-screen {
     border-radius: 14px;
   }
+}
+
+
+.unfoucsed {
+  filter: blur(1px) brightness(0.5);
+  pointer-events: none;
 }

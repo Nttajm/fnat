@@ -13,6 +13,13 @@ function initCameraButtonToggle() {
 
     ipad.classList.toggle('screen-on', !isOn);
     ipad.classList.toggle('screen-off', isOn);
+
+    const studentCenterImg = document.querySelector('.student-center');
+    if (studentCenterImg) {
+      studentCenterImg.classList.toggle('unfoucsed', !isOn);
+      studentCenterImg.classList.toggle('focused', isOn);
+    }
+    
   });
 }
 
