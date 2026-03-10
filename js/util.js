@@ -19,7 +19,7 @@ function initCameraButtonToggle() {
       studentCenterImg.classList.toggle('unfoucsed', !isOn);
       studentCenterImg.classList.toggle('focused', isOn);
     }
-    
+
   });
 }
 
@@ -73,4 +73,35 @@ initStartMenuNavigation();
 
 initCameraButtonToggle();
 
+// Room switching functionality
+function initRoomSwitching() {
+  const rooms = document.querySelectorAll('.room');
+  const currentRoomImg = document.querySelector('.current-room');
+  const ipadScreen = document.querySelector('.ipad-screen');
+
+  if (!rooms.length || !currentRoomImg || !ipadScreen) return;
+
+  rooms.forEach(room => {
+    room.addEventListener('click', () => {
+      const roomId = room.id.toLowerCase();
+      
+      // Add static effect
+      ipadScreen.classList.add('static-transition');
+      
+      // After static effect (300ms), change the room
+      setTimeout(() => {
+        // Update room image
+        currentRoomImg.src = `game_rooms/${roomId}/${roomId}_empty.png`;
+        currentRoomImg.dataset.currRoom = roomId.toUpperCase();
+        
+        // Remove static effect
+        ipadScreen.classList.remove('static-transition');
+      }, 300);
+    });
+  });
+}
+
+initRoomSwitching();
+
 // end  
+

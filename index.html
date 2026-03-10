@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/game-utils.css">
   <link rel="icon" href="https://lcnjoel.com/css/standard.css">
   <link rel="stylesheet" href="css/clock.css">
+  <link rel="stylesheet" href="css/effects.css">
 </head>
 <body>
   <!-- is to remove dn -->
@@ -62,6 +63,8 @@
           <div class="ipad-screen sc-flicker">
             <img src="assets/textures/texture_smudges.avif" class="ipad-texture" alt="iPad texture">
             <div class="ipad-screen-data" id="ips-data">
+              <img src="game_rooms/c3/c3_empty.png" class="current-room css-vcr" data-curr-room='A1' alt="Current Room" >
+              <div class="css-vcr-tracking"></div>
               <div class="rec-circle">
                 <span
                   aria-label="Recording"
@@ -135,7 +138,7 @@
           <div class="power-remaining">
             <span id="power-percentage">Power: 100%</span>
           </div>
-          <div class="usage-cont"> test
+          <div class="usage-cont"> 
             <span id="power-usage">Usage </span>
             <div class="usage" id="u1"></div>
             <div class="usage" id="u2"></div>
