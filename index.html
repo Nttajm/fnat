@@ -41,9 +41,33 @@
     </div>
     <div class="game-view">
       <div class="student-center">
-          
+          <div class="sc-objects">
+            <div class="doorButtons left">
+              <button class="door-btn" data-door="left" id="doorLeft">DOOR</button>
+              <button class="light-btn" data-light="left">LIGHT</button>
+            </div>
+            <div class="doorButtons right">
+              <button class="door-btn" data-door="right" id="doorRight">DOOR</button>
+              <button class="light-btn" data-light="right">LIGHT</button>
+            </div>
+
+
+            <div class="computer_trigger"></div>
+            <div class="computer-img-hover"></div>
+          </div>
       </div>
       <div class="game-ui">
+        <div class="dev-tools">
+          <div>
+            <span id="dev-time">time (s): 00:00</span>
+            <span id="dev-power">power: 100%</span>
+            <span id="dev-door-left">door Left: closed</span>
+            <span id="dev-door-right">door Right: closed</span>
+          </div>
+          <div>
+            <span id="dev-usage">usage: 0%</span>
+          </div>
+        </div>
       
         <div class="game-clock ">
             <div class="clock-js-import"></div>
@@ -140,10 +164,10 @@
           </div>
           <div class="usage-cont"> 
             <span id="power-usage">Usage </span>
-            <div class="usage" id="u1"></div>
-            <div class="usage" id="u2"></div>
-            <div class="usage" id="u3"></div>
-            <div class="usage" id="u4"></div>
+            <div class="usage " id="u1"></div>
+            <div class="usage " id="u2"></div>
+            <div class="usage " id="u3"></div>
+            <div class="usage " id="u4"></div>
           </div>
         </div>
       </div>

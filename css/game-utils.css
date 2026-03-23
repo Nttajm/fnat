@@ -88,16 +88,116 @@ body {
 }
 
 .student-center {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-30%, -40%);
-  width: 100%;
+  position: absolute;
+  top: 0;
+  left: -30%;
+  width: 160%;
   height: 100%;
-  scale: 1.3;
   background-image: url('../assets/studentcenter/L_R_open.png');
   background-position: center;
   background-size: cover;
+}
+
+.sc-objects {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+}
+
+.doorButtons {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #2a2a2a;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  pointer-events: auto;
+}
+
+.doorButtons button {
+  padding: 12px 18px;
+  background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 50%, #0f0f0f 100%);
+  border: 2px solid #3a3a3a;
+  border-bottom-color: #1a1a1a;
+  color: #888;
+  font-family: var(--f13);
+  font-size: 0.85rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 2px 4px rgba(0,0,0,0.4);
+}
+
+.doorButtons button:hover,
+.doorButtons .door-btn.active {
+  background: linear-gradient(180deg, #8b2020 0%, #6b1515 50%, #4a0f0f 100%);
+  border-color: #a33;
+  color: #ff6b6b;
+  text-shadow: 0 0 8px rgba(255,100,100,0.6);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    0 0 12px rgba(180,50,50,0.4);
+}
+
+.doorButtons .light-btn.active {
+  background: linear-gradient(180deg, #8b7a00 0%, #6b5e00 50%, #4a4200 100%);
+  border-color: #b8a000;
+  color: #ffe066;
+  text-shadow: 0 0 8px rgba(255,220,50,0.6);
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.1),
+    0 0 12px rgba(200,170,0,0.4);
+}
+
+
+
+.doorButtons.left {
+  top: 41%;
+  left: 16%;
+  transform: perspective(170px) rotateY(-10deg);
+  transform-origin: left center;
+}
+
+.doorButtons.right {
+  top: 34%;
+  right: 28%;
+  transform: perspective(170px) rotateY(10deg);
+  transform-origin: right center;
+}
+
+.computer_trigger {
+  position: absolute;
+  top: 0%;
+  left: 3%;
+  width: 180px;
+  height: 120px;
+  display: none;
+}
+
+.computer-img-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/studentcenter/computerhover.png');
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.computer_trigger:hover ~ .computer-img-hover {
+  opacity: 1;
 }
 
 .game-view {
@@ -116,6 +216,21 @@ body {
   width: 100%;
   height: 100%;
   z-index: 3;
+  pointer-events: none;
+}
+
+.dev-tools {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: black;
+  border: 2px solid white;
+  color: white;
+  padding: 6px 10px;
+  font-family: var(--f15);
+  font-size: 0.7rem;
+  z-index: 10;
+  pointer-events: none;
 }
 
 .game-border {

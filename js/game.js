@@ -2,13 +2,14 @@
 
 
 import { CLOCK_SET } from "./clock.js";
+import { initCameraPanning } from "./util.js";
 
 const elemems = {
   clock: document.querySelector('.clock'),
-  night: document.querySelector('.door1'),
-  door1: document.querySelector('.door2'),
-  door2: document.querySelector('.light1'),
-  light1: document.querySelector('.light2'),
+  doorLeft: document.querySelector('[data-door="left"]'),
+  doorRight: document.querySelector('[data-door="right"]'),
+  lightLeft: document.querySelector('[data-light="left"]'),
+  lightRight: document.querySelector('[data-light="right"]'),
   cameras: document.querySelector('.cameras'),
 }
 
@@ -20,6 +21,9 @@ export let game = {
   night: 1,
   aiLevel: 1,
   gamespeed: 1000, // in milliseconds
+    power: 100,
+  powerOn: true,
+  usage: 0,
 }
 
 export let scene = {
@@ -28,85 +32,11 @@ export let scene = {
   light1: false, // false means off, true means on
   light2: false,
   cameras: false,
-  power: 100,
-  powerOn: true,
+
   CheckingCameras: false,
 }
 
-// Camera panning system
-let cameraSystem = {
-  currentPanX: 0, // current horizontal pan position (0 = center)
-  maxPanX: 30, // maximum pan distance (in percentage)
-  panSpeed: 0.8, // how fast to pan
-  isMovingLeft: false,
-  isMovingRight: false,
-  studentCenterElement: null,
-}
 
-function initCameraPanning() {
-  // Prevent double initialization  
-  if (cameraSystem.studentCenterElement) return;
-  
-  cameraSystem.studentCenterElement = document.querySelector('.student-center');
-  
-  if (!cameraSystem.studentCenterElement) return;
-  
-  // Set initial background position
-  cameraSystem.studentCenterElement.style.backgroundPosition = '50% 50%';
-  
-  // Add mouse move event listener
-  document.addEventListener('mousemove', handleCameraPanning);
-  
-  // Start the camera panning animation loop
-  requestAnimationFrame(updateCameraPosition);
-}
-
-function handleCameraPanning(event) {
-  const screenWidth = window.innerWidth;
-  const mouseX = event.clientX;
-  const leftThreshold = screenWidth * 0.2; // 20% from left
-  const rightThreshold = screenWidth * 0.8; // 20% from right
-  
-  // Reset movement flags
-  cameraSystem.isMovingLeft = false;
-  cameraSystem.isMovingRight = false;
-  
-  // Check if mouse is in left 20% area
-  if (mouseX <= leftThreshold) {
-    cameraSystem.isMovingLeft = true;
-  }
-  // Check if mouse is in right 20% area  
-  else if (mouseX >= rightThreshold) {
-    cameraSystem.isMovingRight = true;
-  }
-}
-
-function updateCameraPosition() {
-  // Move left
-  if (cameraSystem.isMovingLeft && cameraSystem.currentPanX > -cameraSystem.maxPanX) {
-    cameraSystem.currentPanX -= cameraSystem.panSpeed;
-    if (cameraSystem.currentPanX < -cameraSystem.maxPanX) {
-      cameraSystem.currentPanX = -cameraSystem.maxPanX;
-    }
-  }
-  
-  // Move right
-  if (cameraSystem.isMovingRight && cameraSystem.currentPanX < cameraSystem.maxPanX) {
-    cameraSystem.currentPanX += cameraSystem.panSpeed;
-    if (cameraSystem.currentPanX > cameraSystem.maxPanX) {
-      cameraSystem.currentPanX = cameraSystem.maxPanX;
-    }
-  }
-  
-  // Apply the background position
-  if (cameraSystem.studentCenterElement) {
-    const backgroundPosX = 50 + cameraSystem.currentPanX; // 50% is center
-    cameraSystem.studentCenterElement.style.backgroundPosition = `${backgroundPosX}% 50%`;
-  }
-  
-  // Continue the animation loop
-  requestAnimationFrame(updateCameraPosition);
-}
 
 
 export function startGame() {
@@ -114,18 +44,20 @@ export function startGame() {
   CLOCK_SET('12:00', 'AM', 'NIGHT 1', true);
   // Initialize camera panning system
   initCameraPanning();
-  // game.loop = true; 
-  // initGameLoop();
+  game.loop = true; 
+  initGameLoop();
 }
 
 
 
 function initGameLoop() {
-  while (game.loop) {
-    setInterval(() => {
-      GameLoop();
-    }, game.gamespeed);
-  }
+  const intervalId = setInterval(() => {
+    if (!game.loop) {
+      clearInterval(intervalId);
+      return;
+    }
+    GameLoop();
+  }, game.gamespeed);
 }
 
 function GameLoop() {
@@ -135,31 +67,57 @@ function GameLoop() {
   powerCheckers();
   events();
   updateTime();
+  UpdateDevBox();
+
+  updateUsageUI();
 }
+
+function UpdateDevBox() {
+  const devTime = document.getElementById('dev-time');
+  const devPower = document.getElementById('dev-power');
+  const devDoorLeft = document.getElementById('dev-door-left');
+  const devDoorRight = document.getElementById('dev-door-right');
+  const devUsage = document.getElementById('dev-usage');
+
+  if (devTime) devTime.textContent = `time (s): ${game.time}`;
+  if (devPower) devPower.textContent = `power: ${game.power.toFixed(1)}%`;
+  if (devDoorLeft) devDoorLeft.textContent = `door Left: ${scene.door1 ? 'closed' : 'open'}`;
+  if (devDoorRight) devDoorRight.textContent = `door Right: ${scene.door2 ? 'closed' : 'open'}`;
+  if (devUsage) devUsage.textContent = `usage: ${game.usage.toFixed(3)}%`;
+}
+
 
 function updateTronics() {
   const random = Math.floor(Math.random() * 20) + 1;
-  while (random < game.aiLevel) {
+  if (random < game.aiLevel) {
   }
 } 
 
 
 function powerCheckers() {
-  if (scene.door1 || scene.door2) {
-    scene.power -= 0.5; // if the door is closed it uses 0.5% power per second, if its open it uses 0% power per second
-  }
 
-  if ( scene.door1 && scene.door2) {
-    scene.power -= 1; // if both doors are closed it uses 1% power per second, if one is open and the other is closed it uses 0.5% power per second, if both are open it uses 0% power per second
-  }
+  let usage = 0;
 
-  if (scene.light1 || scene.light2) {
-    scene.power -= 0.5; // if the light is on it uses 0.5% power per second, if its off it uses 0% power per second
-  }
+  if (scene.door1) usage += 0.1;
+  if (scene.door2) usage += 0.1;
+  if (scene.light1) usage += 0.05;
+  if (scene.light2) usage += 0.05;
+  if (scene.cameras) usage += 0.15;
 
-  if (scene.cameras) {
-    scene.power -= 0.2;
-  }
+  game.power -= usage;
+  game.usage = usage;
+}
+
+function updateUsageUI() {
+  const usage1 = document.getElementById('u1');
+  const usage2 = document.getElementById('u2');
+  const usage3 = document.getElementById('u3');
+  const usage4 = document.getElementById('u4');
+
+  usage1.classList.toggle('dn', !(game.usage > 0));
+  usage2.classList.toggle('dn', !(game.usage > 0.1));
+  usage3.classList.toggle('dn', !(game.usage > 0.2));
+  usage4.classList.toggle('dn', !(game.usage > 0.3));
 }
 
 function updateTime() {
@@ -188,4 +146,27 @@ document.addEventListener('DOMContentLoaded', () => {
       initCameraPanning();
     }
   }, 100);
+});
+
+
+// Door & light button toggles
+
+elemems.doorLeft.addEventListener('click', () => {
+  scene.door1 = !scene.door1;
+  elemems.doorLeft.classList.toggle('active', scene.door1);
+});
+
+elemems.doorRight.addEventListener('click', () => {
+  scene.door2 = !scene.door2;
+  elemems.doorRight.classList.toggle('active', scene.door2);
+});
+
+elemems.lightLeft.addEventListener('click', () => {
+  scene.light1 = !scene.light1;
+  elemems.lightLeft.classList.toggle('active', scene.light1);
+});
+
+elemems.lightRight.addEventListener('click', () => {
+  scene.light2 = !scene.light2;
+  elemems.lightRight.classList.toggle('active', scene.light2);
 });
